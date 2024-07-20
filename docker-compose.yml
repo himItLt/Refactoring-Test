@@ -1,0 +1,22 @@
+version: "3.5"
+
+services:
+  webserver:
+    build:
+      context: ./docker/webserver
+    restart: unless-stopped
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/var/www
+    networks:
+      test-external:
+        aliases:
+          - test.local
+      default:
+    command: "tail -f /dev/null"
+
+networks:
+  test-external:
+    name: test-external
+    external: true

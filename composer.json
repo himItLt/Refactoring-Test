@@ -1,0 +1,20 @@
+{
+    "name": "test/refactore",
+    "type": "project",
+    "description": "Test task to get a job",
+    "license": "MIT",
+    "require": {
+        "php": "^8.3"
+    },
+    "require-dev": {
+        "codeception/codeception": "^5.1",
+        "codeception/module-asserts": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": false
+}
