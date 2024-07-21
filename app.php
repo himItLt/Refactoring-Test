@@ -5,7 +5,7 @@ use App\Exceptions\FileNotFoundException;
 use App\Exceptions\CreateModelException;
 use App\Processors\CommissionProcessor;
 use App\Services\ApiService;
-use App\Tools\FileReader;
+use App\Utils\FileReader;
 
 require_once __DIR__ . '/vendor/autoload.php';
 

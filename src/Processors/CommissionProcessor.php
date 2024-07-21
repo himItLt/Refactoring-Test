@@ -6,7 +6,7 @@ use App\Exceptions\BinNotFoundException;
 use App\Exceptions\CreateModelException;
 use App\Models\Transaction;
 use App\Services\ApiService;
-use App\Tools\FileReader;
+use App\Utils\FileReader;
 
 class CommissionProcessor
 {
