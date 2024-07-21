@@ -28,7 +28,7 @@ try {
     $processor = new CommissionProcessor(
         reader: new FileReader($fileName),
         api: new ApiService($cachedRates),
-        ceilResult: DO_CEIL
+        doCeiling: DO_CEIL
     );
 
     $commissions = $processor->calculate();

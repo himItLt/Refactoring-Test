@@ -32,6 +32,8 @@ class FileReader
 
     public function __destruct()
     {
-        fclose($this->handler);
+        if ($this->handler) {
+            fclose($this->handler);
+        }
     }
 }

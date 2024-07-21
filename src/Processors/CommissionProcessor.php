@@ -45,7 +45,7 @@ class CommissionProcessor
     public function __construct(
         protected FileReader $reader,
         protected ApiService $api,
-        protected bool $ceilResult = false,
+        protected bool       $doCeiling = false,
     )
     {
     }
@@ -78,7 +78,7 @@ class CommissionProcessor
                 isEu: $isEu
             );
 
-            $this->results[] = ($this->ceilResult ? $this->ceilResult($commission) : $commission);
+            $this->results[] = ($this->doCeiling ? $this->ceilResult($commission) : $commission);
         }
 
         return $this->results;
@@ -95,6 +95,7 @@ class CommissionProcessor
         return ceil($value * 100) / 100;
     }
 
+    /** @codeCoverageIgnore  */
     public function getResults(): array
     {
         return $this->results;
