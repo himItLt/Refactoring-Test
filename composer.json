@@ -8,11 +8,13 @@
     },
     "require-dev": {
         "codeception/codeception": "^5.1",
-        "codeception/module-asserts": "*"
+        "codeception/module-asserts": "*",
+        "codeception/assert-throws": "dev-master"
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "App\\": "src/",
+            "Tests\\": "tests"
         }
     },
     "minimum-stability": "dev",

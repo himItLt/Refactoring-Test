@@ -1,70 +1,39 @@
 <?php
 
+use App\Exceptions\BinNotFoundException;
+use App\Exceptions\FileNotFoundException;
+use App\Exceptions\CreateModelException;
+use App\Processors\CommissionProcessor;
+use App\Services\ApiService;
+use App\Tools\FileReader;
 
-foreach (explode("\n", file_get_contents($argv[1])) as $row) {
+require_once __DIR__ . '/vendor/autoload.php';
 
-    if (empty($row)) break;
-    $p = explode(",", $row);
-    $p2 = explode(':', $p[0]);
-    $value[0] = trim($p2[1], '"');
-    $p2 = explode(':', $p[1]);
-    $value[1] = trim($p2[1], '"');
-    $p2 = explode(':', $p[2]);
-    $value[2] = trim($p2[1], '"}');
+// TODO: change to 'production' when on the production, get rates api is required authorization locally and always fails
+const ENV = 'local';
+const DO_CEIL = true;
 
-    $binResults = file_get_contents('https://lookup.binlist.net/' . $value[0]);
-    if (!$binResults)
-        die('error!');
-    $r = json_decode($binResults);
-    $isEu = isEu($r->country->alpha2);
+$output = fn(array $lines) => implode(PHP_EOL, $lines) . PHP_EOL;
 
-    $rate = @json_decode(file_get_contents('https://api.exchangeratesapi.io/latest'), true)['rates'][$value[2]];
-    if ($value[2] == 'EUR' or $rate == 0) {
-        $amntFixed = $value[1];
-    }
-    if ($value[2] != 'EUR' or $rate > 0) {
-        $amntFixed = $value[1] / $rate;
-    }
+$cachedRates = ENV === 'local' ? [
+    'EUR' => 1.2,
+    'USD' => 2.5,
+    'JPY' => 3.123,
+    'GBP' => 5.21,
+] : null;
 
-    echo $amntFixed * ($isEu == 'yes' ? 0.01 : 0.02);
-    print "\n";
-}
+$fileName = !empty($argv[1]) ? __DIR__ . '/' . $argv[1] : '';
+$processor = null;
+try {
+    $processor = new CommissionProcessor(
+        reader: new FileReader($fileName),
+        api: new ApiService($cachedRates),
+        ceilResult: DO_CEIL
+    );
 
-function isEu($c)
-{
-    $result = false;
-    switch ($c) {
-        case 'AT':
-        case 'BE':
-        case 'BG':
-        case 'CY':
-        case 'CZ':
-        case 'DE':
-        case 'DK':
-        case 'EE':
-        case 'ES':
-        case 'FI':
-        case 'FR':
-        case 'GR':
-        case 'HR':
-        case 'HU':
-        case 'IE':
-        case 'IT':
-        case 'LT':
-        case 'LU':
-        case 'LV':
-        case 'MT':
-        case 'NL':
-        case 'PO':
-        case 'PT':
-        case 'RO':
-        case 'SE':
-        case 'SI':
-        case 'SK':
-            $result = 'yes';
-            return $result;
-        default:
-            $result = 'no';
-    }
-    return $result;
+    $commissions = $processor->calculate();
+    echo $output($commissions);
+} catch (FileNotFoundException | CreateModelException | BinNotFoundException $e) {
+    echo $output($processor ? $processor->getResults() : []);
+    echo 'Error: ' . $e->getMessage() . PHP_EOL;
 }

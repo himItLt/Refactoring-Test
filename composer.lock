@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1190fef7b4af6c09c98018ba73b31851",
+    "content-hash": "0e9ba68f624c6288aaede3a413536069",
     "packages": [],
     "packages-dev": [
         {
@@ -69,6 +69,51 @@
                 "source": "https://github.com/Behat/Gherkin/tree/v4.9.0"
             },
             "time": "2021-10-12T13:05:09+00:00"
+        },
+        {
+            "name": "codeception/assert-throws",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Codeception/AssertThrows.git",
+                "reference": "e87f75390fccc90037b9411268432fbb69b3f7e9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Codeception/AssertThrows/zipball/e87f75390fccc90037b9411268432fbb69b3f7e9",
+                "reference": "e87f75390fccc90037b9411268432fbb69b3f7e9",
+                "shasum": ""
+            },
+            "require": {
+                "phpunit/phpunit": "^8.0|^9.0|^10.0|^11.0"
+            },
+            "default-branch": true,
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Codeception\\": "./"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "davert",
+                    "email": "davert@codeception.com"
+                },
+                {
+                    "name": "Gustavo Nieves",
+                    "homepage": "https://medium.com/@ganieves"
+                }
+            ],
+            "description": "Assert exception was thrown without stopping a test",
+            "support": {
+                "issues": "https://github.com/Codeception/AssertThrows/issues",
+                "source": "https://github.com/Codeception/AssertThrows/tree/1.4.0"
+            },
+            "time": "2024-02-06T21:28:04+00:00"
         },
         {
             "name": "codeception/codeception",
@@ -3241,11 +3286,13 @@
         }
     ],
     "aliases": [],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": "^8.3"
+    },
     "platform-dev": [],
     "plugin-api-version": "2.6.0"
 }
